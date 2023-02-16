@@ -1,0 +1,86 @@
+@font-face {
+  font-family: "Merri";
+  src: url("../assets/fonts/MerriweatherSans-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Merri-bold";
+  src: url("../assets/fonts/MerriweatherSans-Bold.ttf");
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Merri-italic";
+  src: url("../assets/fonts/MerriweatherSans-Italic.ttf");
+  font-style: italic;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Monster";
+  src: url("../assets/fonts/Montserrat-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Monster-bold";
+  src: url("../assets/fonts/Montserrat-Bold.ttf");
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Monster-italic";
+  src: url("../assets/fonts/Montserrat-Bold.ttf");
+  font-style: normal;
+  font-weight: bold;
+}
+* {
+  font-family: "Monster", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 18px;
+}
+:root {
+  --color-darkblue: #25274d;
+  --color-darkgrey: #494866;
+  --color-lightgrey: #aaabb8;
+  --color-lightblue: #2e9cca;
+  --color-teal: #29648a;
+  --color-white: #f5f5f5;
+}
+h1 {
+  font-family: "Merri-italic", sans-serif;
+  font-size: 3rem;
+}
+h2 {
+  font-family: "Merri", sans-serif;
+  font-size: 2.5rem;
+}
+h3 {
+  font-size: 2rem;
+}
+p,
+a {
+  font-size: 1.2rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-darkblue);
+  color: var(--color-white);
+  height: 200px;
+  padding: 0 2rem;
+}
+
+button {
+  background-color: var(--color-teal);
+  border: 2px solid transparent;
+  color: var(--color-white);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
