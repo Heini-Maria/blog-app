@@ -1,9 +1,23 @@
 import React from "react";
 import Header from "./Components/Header";
 import "./style.css";
+import { createContext, useState } from "react";
+
+export const ThemeContext = createContext(null);
 
 const App = () => {
-  return <Header />;
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme((curr) => (curr === "light" ? "dark" : "light"));
+  };
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div id={theme}>
+        <Header theme={theme} toggleTheme={toggleTheme} />
+      </div>
+    </ThemeContext.Provider>
+  );
 };
 
 export default App;
