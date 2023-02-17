@@ -1,21 +1,25 @@
 import React from "react";
-import ReactSwitch from "react-switch";
-import { FaSistrix } from "react-icons/fa";
 
 const Header = ({ toggleTheme, theme }) => {
   return (
-    <header className="">
-      <h1>Micro Blog</h1>
-      <div className="switch">
-        <ReactSwitch onChange={toggleTheme} chkecked={theme === "dark"} />
+    <header className="header">
+      <div>
+        <h1>Nerdy Facts</h1>
+        <span>micro blog</span>
       </div>
-      <form action="submit" className="search-bar">
-        <input type="text" placeholder="search.." />
-        <button>
-          <FaSistrix />
-        </button>
-      </form>
-      <button>Create a post</button>
+      <div className="switch-container">
+        <p>switch to {theme === "light" ? "dark" : "light"}</p>
+        <label className="switch">
+          <input
+            type="checkbox"
+            onChange={toggleTheme}
+            checked={theme === "dark"}
+          />
+          <span className="slider"></span>
+        </label>
+      </div>
+      <button>Create a fact</button>
+      <div id="shadow"></div>
     </header>
   );
 };
