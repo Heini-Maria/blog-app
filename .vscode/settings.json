@@ -1,0 +1,8 @@
+{
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+      }
+}
