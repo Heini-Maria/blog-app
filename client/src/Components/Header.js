@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Header = ({ toggleTheme, theme }) => {
   return (
@@ -18,7 +19,9 @@ const Header = ({ toggleTheme, theme }) => {
           <span className="slider"></span>
         </label>
       </div>
-      <button>Create a fact</button>
+      <NavLink className="button" to="post">
+        Create a fact
+      </NavLink>
       <div id="shadow"></div>
     </header>
   );

@@ -2,8 +2,10 @@ import React from "react";
 import Header from "./Components/Header";
 import "./style.css";
 import { createContext, useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./Components/Home";
+import AddPost from "./Components/AddPost";
 
 export const ThemeContext = createContext(null);
 
@@ -23,14 +25,19 @@ const App = () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
   };
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        <div id={theme}>
-          <Header theme={theme} toggleTheme={toggleTheme} />
-          <Home />
-        </div>
-      </ThemeContext.Provider>
-    </QueryClientProvider>
+    <Router>
+      <QueryClientProvider client={queryClient}>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
+          <div className="background" id={theme}>
+            <Header theme={theme} toggleTheme={toggleTheme} />
+            <Routes>
+              <Route path="/post" element={<AddPost />} />
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </div>
+        </ThemeContext.Provider>
+      </QueryClientProvider>
+    </Router>
   );
 };
 

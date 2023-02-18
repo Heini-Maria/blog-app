@@ -10,7 +10,6 @@ const Home = () => {
   }
   const posts = results.data.posts;
 
-  console.log(posts);
   return (
     <div className="home">
       {posts.map((post, index) => (
