@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaRegComment, FaRegStar } from "react-icons/fa";
 import prettyDate from "./utils";
 
@@ -18,7 +18,7 @@ const Post = ({ post, index }) => {
             <FaRegComment /> {post.comments.length}
           </li>
         </ul>
-        <button>Comment</button>
+        <Link to={`/details/${post.id}`}className="button">Show</Link>
       </div>
     </div>
   );

@@ -236,8 +236,12 @@ input:checked + .slider:before {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  width: 100vw;
   padding: 2rem 4rem;
   color: var(--text-color);
+}
+.new-post-view > form {
+  width: 100%;
 }
 .form {
   margin-top: 2rem;
@@ -253,7 +257,129 @@ input:checked + .slider:before {
   border: none;
   padding: 0.5rem;
 }
-.form .button {
+.button.cancel {
   margin-right: 0.5rem;
   background-color: var(--primary-color);
+}
+/* ------------Detail page ---------- */
+.details {
+  min-height: 100vh;
+  padding: 2rem 4rem;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.details > p {
+  font-size: 1.6rem;
+}
+.icon:hover {
+  color: var(--accent-color);
+  transform: translateY(-2px);
+}
+.settings {
+  align-self: flex-end;
+}
+.settings > * {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: var(--text-color);
+}
+.details > * {
+  margin-top: 1rem;
+}
+.details > .likes {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-weight: bold;
+  -webkit-animation: fadeIn 0.8s ease-in both;
+  -moz-animation: fadeIn 0.8s ease-in both;
+  -o-animation: fadeIn 0.8s ease-in both;
+  animation: fadeIn 0.8s ease-in both;
+}
+.details > ul {
+  margin-top: 0;
+}
+.details > ul > li {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+.details > .button {
+  margin-top: 2rem;
+}
+.comment {
+  -webkit-animation: fadeIn 0.8s ease-in 0.8s both;
+  -moz-animation: fadeIn 0.8s ease-in 0.8s both;
+  -o-animation: fadeIn 0.8s ease-in 0.8s both;
+  animation: fadeIn 0.8s ease-in 0.8s both;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.leave-comment {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.leave-comment > input {
+  padding: 0.25rem;
+  font-size: 1.2rem;
+  width: 40%;
+  border: none;
+  margin-right: 1rem;
+}
+.leave-comment > .icon {
+  font-size: 1.6rem;
+  justify-self: flex-end;
 }

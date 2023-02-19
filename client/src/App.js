@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./Components/Home";
 import AddPost from "./Components/AddPost";
+import PostDetails from "./Components/PostDetails";
+import EditPost from "./Components/EditPost";
 
 export const ThemeContext = createContext(null);
 
@@ -31,6 +33,8 @@ const App = () => {
           <div className="background" id={theme}>
             <Header theme={theme} toggleTheme={toggleTheme} />
             <Routes>
+              <Route path="details/:id/edit" element={<EditPost />} />
+              <Route path="details/:id" element={<PostDetails />} />
               <Route path="/post" element={<AddPost />} />
               <Route path="/" element={<Home />} />
             </Routes>
