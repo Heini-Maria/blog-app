@@ -18,7 +18,7 @@ const Post = ({ post, index }) => {
             <FaRegComment /> {post.comments.length}
           </li>
         </ul>
-        <Link to={`/details/${post.id}`}className="button">Show</Link>
+        <Link to={`/details/${post.id}`}className="button">View</Link>
       </div>
     </div>
   );

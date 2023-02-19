@@ -9,7 +9,7 @@ const Header = ({ toggleTheme, theme }) => {
         <span>micro blog</span>
       </div>
       <div className="switch-container">
-        <p>switch to {theme === "light" ? "dark" : "light"}</p>
+        <p>switch to {theme === "light" ? "dark" : "light"} mode</p>
         <label className="switch">
           <input
             type="checkbox"
@@ -20,7 +20,7 @@ const Header = ({ toggleTheme, theme }) => {
         </label>
       </div>
       <NavLink className="button" to="post">
-        Create a fact
+        Add a fact
       </NavLink>
       <div id="shadow"></div>
     </header>
