@@ -4,6 +4,14 @@ import { Link } from "react-router-dom";
 const FormFields = ({ post }) => {
   return (
     <div className="form">
+      <label htmlFor="username">*Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        defaultValue={post.username}
+        required
+      />
       <label htmlFor="title">*Title:</label>
       <input
         type="text"
@@ -12,10 +20,15 @@ const FormFields = ({ post }) => {
         defaultValue={post.title}
         required
       />
-      <label htmlFor="text" >
-        *Text:
-      </label>
-      <textarea name="text" id="text" cols="10" rows="8" defaultValue={post.text} required></textarea>
+      <label htmlFor="postText">*Text:</label>
+      <textarea
+        name="postText"
+        id="postText"
+        cols="10"
+        rows="8"
+        defaultValue={post.postText}
+        required
+      ></textarea>
       <p>* required</p>
       <div>
         <Link className="button cancel" to="/">

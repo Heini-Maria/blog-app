@@ -202,6 +202,10 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
 }
+.post > p:first-child {
+  font-weight: bold;
+  color: var(--primary-color);
+}
 .post span {
   font-size: 1rem;
 }
@@ -269,6 +273,11 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+.details > p:nth-child(2) {
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 1.2rem;
 }
 .details > p {
   font-size: 1.6rem;
@@ -382,4 +391,41 @@ input:checked + .slider:before {
 .leave-comment > .icon {
   font-size: 1.6rem;
   justify-self: flex-end;
+}
+/* ----------- media queries------------ */
+@media screen and (max-width: 1000px) {
+  .switch-container > p {
+    display: none;
+  }
+  .switch-container {
+    position: static;
+    align-self: flex-end;
+  }
+  .header > .button {
+    position: static;
+  }
+  .header-actions {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    height: 100%;
+    justify-content: space-around;
+  }
+}
+@media screen and (max-width: 650px) {
+  html {
+    font-size: 14px;
+  }
+  .header {
+    flex-direction: column;
+    padding: 2rem 4rem;
+    gap: 1rem;
+    flex: 1;
+  }
+  .header > div > span {
+    display: none;
+  }
+  .switch-container {
+    display: none;
+  }
 }

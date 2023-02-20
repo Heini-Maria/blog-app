@@ -1,5 +1,5 @@
 async function fecthPosts() {
-  const apiRes = await fetch(`/api`);
+  const apiRes = await fetch(`http://localhost:3001/posts`);
 
   if (!apiRes.ok) {
     throw new Error(`/api fetch not ok`);

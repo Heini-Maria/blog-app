@@ -6,16 +6,17 @@ import prettyDate from "./utils";
 const Post = ({ post, index }) => {
   return (
     <div className="post">
+      <p>@{post.username}</p>
       <h3>{post.title}</h3>
-      <span>{prettyDate(post.created)}</span>
-      <p>{post.text}</p>
+      <span>{prettyDate(post.createdAt)}</span>
+      <p>{post.postText}</p>
       <div className="stats">
         <ul>
           <li>
-            <FaRegStar /> {post.likes}
+            <FaRegStar /> 
           </li>
           <li>
-            <FaRegComment /> {post.comments.length}
+            <FaRegComment /> 
           </li>
         </ul>
         <Link to={`/details/${post.id}`}className="button">View</Link>

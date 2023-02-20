@@ -13,7 +13,7 @@ const PostDetails = () => {
   }
   console.log(results.data);
   const key = id - 1;
-  const post = results.data.posts[key];
+  const post = results.data[key];
   return (
     <div className="details">
       <div className="settings">
@@ -22,20 +22,20 @@ const PostDetails = () => {
         </Link>
         <FaTrash className="icon" />
       </div>
+      <p>posted by @{post.username}</p>
       <h2>{post.title}</h2>
-      <span>posted on {prettyDate(post.created)}</span>
-      <p>{post.text}</p>
+      <span>posted on {prettyDate(post.createdAt)}</span>
+      <p>{post.postText}</p>
       <div className="likes">
         <FaRegStar className="icon" />
-        {post.likes}
       </div>
-      <h3>{post.comments.length} comments:</h3>
+      <h3> comments:</h3>
       <ul>
-        {post.comments.map((comment, index) => (
+        {/* {post.comments.map((comment, index) => (
           <li className="comment" key={index}>
             {comment}
           </li>
-        ))}
+        ))} */}
       </ul>
       <div className="leave-comment">
         <input

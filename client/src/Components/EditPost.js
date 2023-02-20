@@ -13,11 +13,11 @@ const EditPost = () => {
   }
   console.log(results.data);
   const key = id - 1;
-  const post = results.data.posts[key];
+  const post = results.data[key];
 return(
   <div className="new-post-view">
       <h2>Edit Post</h2>
-      <form action="/api" method="POST">
+      <form action="/" method="POST">
         <FormFields post={post}/>
       </form>
     </div>
