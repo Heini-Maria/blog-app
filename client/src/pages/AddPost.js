@@ -1,5 +1,5 @@
 import React from "react";
-import FormFields from "./FormFields";
+import FormFields from "../Components/FormFields";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

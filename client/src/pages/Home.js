@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import Post from "./Post";
-import fetchPosts from "./fetchPosts";
+import Post from "../Components/Post";
+import fetchPosts from "../Components/fetchPosts";
 
 const Home = () => {
   const results = useQuery(["posts"], fetchPosts);

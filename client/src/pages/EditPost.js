@@ -1,9 +1,8 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import fetchPost from "./fetchPost";
-import FormFields from "./FormFields";
-
+import fetchPost from "../Components/fetchPost";
+import FormFields from "../Components/FormFields";
 
 const EditPost = () => {
   const { id } = useParams();
@@ -14,14 +13,14 @@ const EditPost = () => {
   console.log(results.data);
   const key = id - 1;
   const post = results.data[key];
-return(
-  <div className="new-post-view">
+  return (
+    <div className="new-post-view">
       <h2>Edit Post</h2>
       <form action="/" method="POST">
-        <FormFields post={post}/>
+        <FormFields post={post} />
       </form>
     </div>
-)
-}
+  );
+};
 
 export default EditPost;

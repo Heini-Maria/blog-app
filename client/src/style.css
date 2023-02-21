@@ -99,6 +99,7 @@ button,
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
   color: var(--color-white);
+  margin-right: 0.5rem;
 }
 button:hover,
 .button:hover {
@@ -128,6 +129,10 @@ button:hover,
 .header > .button {
   position: absolute;
   right: 4rem;
+}
+.header-actions {
+  display: flex;
+  justify-content: space-around;
 }
 .switch-container {
   display: flex;
@@ -323,6 +328,23 @@ input:checked + .slider:before {
   -moz-animation: fadeIn 0.8s ease-in 0.8s both;
   -o-animation: fadeIn 0.8s ease-in 0.8s both;
   animation: fadeIn 0.8s ease-in 0.8s both;
+}
+/*  ------------- register & login -------------- */
+
+.register,
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 2rem 4rem;
+  color: var(--text-color);
+}
+.register button,
+.login button {
+  width: 15%;
+  margin-top: 2rem;
 }
 @-webkit-keyframes fadeIn {
   0% {

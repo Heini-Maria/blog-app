@@ -20,6 +20,9 @@ const Header = ({ toggleTheme, theme }) => {
             <span className="slider"></span>
           </label>
         </div>
+        <NavLink className="button" to="/login">
+          Login
+        </NavLink>
         <NavLink className="button" to="post">
           Add a fact
         </NavLink>

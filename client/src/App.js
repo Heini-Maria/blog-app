@@ -4,10 +4,12 @@ import "./style.css";
 import { createContext, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Home from "./Components/Home";
-import AddPost from "./Components/AddPost";
-import PostDetails from "./Components/PostDetails";
-import EditPost from "./Components/EditPost";
+import Home from "./pages/Home";
+import AddPost from "./pages/AddPost";
+import PostDetails from "./pages/PostDetails";
+import EditPost from "./pages/EditPost";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 
 export const ThemeContext = createContext(null);
 
@@ -36,6 +38,8 @@ const App = () => {
               <Route path="details/:id/edit" element={<EditPost />} />
               <Route path="details/:id" element={<PostDetails />} />
               <Route path="/post" element={<AddPost />} />
+              <Route path="/registration" element={<Registration />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
             </Routes>
           </div>
