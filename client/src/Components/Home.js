@@ -8,7 +8,6 @@ const Home = () => {
   if (results.isLoading) {
     return <p>Loading...</p>;
   }
-  console.log(results.data);
   const posts = results.data;
 
   return (

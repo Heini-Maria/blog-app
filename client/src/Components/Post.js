@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaRegComment, FaRegStar } from "react-icons/fa";
 import prettyDate from "./utils";
 
-const Post = ({ post, index }) => {
+const Post = ({ post }) => {
   return (
     <div className="post">
       <p>@{post.username}</p>

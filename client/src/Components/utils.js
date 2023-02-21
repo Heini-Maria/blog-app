@@ -1,6 +1,5 @@
 function prettyDate(date) {
   let dateModify = date.toString().substr(0, 10);
-  console.log(dateModify);
   let result =
     dateModify.slice(8, 10) +
     "/" +

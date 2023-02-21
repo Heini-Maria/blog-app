@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Components/Header";
 import "./style.css";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./Components/Home";
@@ -14,7 +14,7 @@ export const ThemeContext = createContext(null);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
+      staleTime: 1000,
       cacheTime: Infinity,
     },
   },
