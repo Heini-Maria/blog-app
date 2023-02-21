@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
+import {shortDate} from "./utils";
 import axios from "axios";
 
 const PostDetails = () => {
@@ -25,6 +26,8 @@ const PostDetails = () => {
   setNewComment("");
   });
 };
+const date = postObject.createdAt;
+console.log(shortDate(date))
   return (
     <div className="details">
       <div className="settings">

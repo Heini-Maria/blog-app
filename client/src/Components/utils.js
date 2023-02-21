@@ -1,4 +1,4 @@
-function prettyDate(date) {
+export function prettyDate(date) {
   let dateModify = date.toString().substr(0, 10);
   let result =
     dateModify.slice(8, 10) +
@@ -9,4 +9,7 @@ function prettyDate(date) {
   return result;
 }
 
-export default prettyDate;
+export function shortDate(date) {
+  let result = date.toString().slice(0, 10);
+  return result;
+}

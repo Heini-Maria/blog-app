@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaRegComment, FaRegStar } from "react-icons/fa";
-import prettyDate from "./utils";
+import { prettyDate } from "./utils";
 
 const Post = ({ post }) => {
   return (
@@ -13,13 +13,15 @@ const Post = ({ post }) => {
       <div className="stats">
         <ul>
           <li>
-            <FaRegStar /> 
+            <FaRegStar />
           </li>
           <li>
-            <FaRegComment /> 
+            <FaRegComment />
           </li>
         </ul>
-        <Link to={`/details/${post.id}`}className="button">View</Link>
+        <Link to={`/details/${post.id}`} className="button">
+          View
+        </Link>
       </div>
     </div>
   );
