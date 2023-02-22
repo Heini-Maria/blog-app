@@ -11,7 +11,7 @@ const Header = ({ toggleTheme, theme }) => {
       username: "",
       id: 0,
       status: false,
-  });
+    });
   };
 
   return (
@@ -37,13 +37,15 @@ const Header = ({ toggleTheme, theme }) => {
             Login
           </NavLink>
         ) : (
-          <NavLink onClick={logout} className="button" to="/">
-            Logout
-          </NavLink>
+          <>
+            <NavLink onClick={logout} className="button" to="/">
+              Logout
+            </NavLink>
+            <NavLink className="button" to="post">
+              Add a fact
+            </NavLink>
+          </>
         )}
-        <NavLink className="button" to="post">
-          Add a fact
-        </NavLink>
       </div>
     </header>
   );

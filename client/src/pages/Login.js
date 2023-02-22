@@ -11,14 +11,14 @@ const Login = () => {
 
   const login = () => {
     const data = { username: username, password: password };
-    axios.post("http://localhost:3001/auth/login", data).then((res) => {
-      if (res.data.error) {
-        alert(res.data.error);
+    axios.post("http://localhost:3001/auth/login", data).then((response) => {
+      if (response.data.error) {
+        alert(response.data.error);
       } else {
-        localStorage.setItem("accessToken", res.data.token);
+        localStorage.setItem("accessToken", response.data.token);
         setAuthState({
-          username: res.data.username,
-          id: res.data.id,
+          username: response.data.username,
+          id: response.data.id,
           status: true,
         });
         navigate("/");

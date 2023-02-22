@@ -70,7 +70,7 @@ const App = () => {
                 <Route path="/post" element={<AddPost />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home authState={authState} />} />
               </Routes>
             </div>
           </ThemeContext.Provider>

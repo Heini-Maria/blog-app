@@ -15,12 +15,16 @@ const PostDetails = () => {
   
 
   useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+    } else {
     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
       setPostObject(response.data);
     });
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
+  }
   }, []);
 
   const deletePost = (id) => {
@@ -28,7 +32,6 @@ const PostDetails = () => {
      console.log("success")
     })
     navigate("/")
-    window.location.reload();
   }
 
   const addComment = () => {

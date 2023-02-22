@@ -4,14 +4,6 @@ import { Link } from "react-router-dom";
 const FormFields = ({ post }) => {
   return (
     <div className="form">
-      <label htmlFor="username">*Username:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        defaultValue={post.username}
-        required
-      />
       <label htmlFor="title">*Title:</label>
       <input
         type="text"

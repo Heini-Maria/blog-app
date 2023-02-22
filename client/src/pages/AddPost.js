@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import FormFields from "../Components/FormFields";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
 
 const AddPost = () => {
   let navigate = useNavigate();
+  const { authState } = useContext(AuthContext);
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+    }
+  }, []);
   const onSubmit = (obj) => {
-    axios.post(`http://localhost:3001/posts`, obj).then(() => {
-      navigate("/");
-    });
+    axios
+      .post(`http://localhost:3001/posts`, obj, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        navigate("/");
+      });
   };
 
   return (
@@ -22,7 +33,6 @@ const AddPost = () => {
           const formData = new FormData(e.target);
           const obj = {
             title: formData.get("title") ?? "",
-            username: formData.get("username") ?? "",
             postText: formData.get("postText") ?? "",
           };
           onSubmit(obj);
