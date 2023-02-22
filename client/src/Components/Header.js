@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
 
 const Header = ({ toggleTheme, theme }) => {
+  const { authState } = useContext(AuthContext);
+  console.log(authState);
   return (
     <header className="header">
-      <div>
+      <NavLink className="logo" to="/">
         <h1>Nerdy Facts</h1>
         <span>micro blog</span>
-      </div>
+      </NavLink>
       <div className="header-actions">
         <div className="switch-container">
           <p>switch to {theme === "light" ? "dark" : "light"} mode</p>
@@ -20,9 +23,11 @@ const Header = ({ toggleTheme, theme }) => {
             <span className="slider"></span>
           </label>
         </div>
-        <NavLink className="button" to="/login">
-          Login
-        </NavLink>
+        {!authState && (
+          <NavLink className="button" to="/login">
+            Login
+          </NavLink>
+        )}
         <NavLink className="button" to="post">
           Add a fact
         </NavLink>

@@ -116,11 +116,15 @@ button:hover,
   width: 100%;
   box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.3);
 }
-.header > div:first-child {
+.logo {
+  text-decoration: none;
+  color: var(--color-white);
+}
+.header > .logo:first-child {
   display: flex;
   flex-direction: column;
 }
-.header > div > span {
+.header > .logo > span {
   align-self: flex-end;
   font-size: 1.5rem;
   margin-top: -0.8rem;

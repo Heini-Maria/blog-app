@@ -19,16 +19,28 @@ const PostDetails = () => {
     });
   }, []);
 
-  const onClick = () => {
+  const addComment = () => {
     axios
-      .post(`http://localhost:3001/comments`, {
-        commentBody: newComment,
-        PostId: id,
-      })
+      .post(
+        `http://localhost:3001/comments`,
+        {
+          commentBody: newComment,
+          PostId: id,
+        },
+        {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((response) => {
-        const commentToAdd = { commentBody: newComment };
+        if(response.data.error) {
+          alert(response.data.error);
+        } else {
+        const commentToAdd = { commentBody: newComment, username: response.data.username};
         setComments([...comments, commentToAdd]);
         setNewComment("");
+        }
       });
   };
   const date = postObject.createdAt;
@@ -53,7 +65,7 @@ const PostDetails = () => {
         {comments.map((comment, index) => {
           return (
             <li className="comment" key={index}>
-              {comment.commentBody}
+             <strong>@{comment.username}: </strong>{comment.commentBody}
             </li>
           );
         })}
@@ -71,7 +83,7 @@ const PostDetails = () => {
           placeholder="add comment.."
           required
         />
-        <FaRegComment onClick={onClick} className="icon" />
+        <FaRegComment onClick={addComment} className="icon" />
       </div>
       <Link to="/" className="button cancel">
         Back
