@@ -1,20 +1,39 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
 import Post from "../Components/Post";
-import fetchPosts from "../Components/fetchPosts";
+import axios from "axios";
 
 const Home = () => {
-  const results = useQuery(["posts"], fetchPosts);
-  if (results.isLoading) {
-    return <p>Loading...</p>;
-  }
-  const posts = results.data;
+  let navigate = useNavigate();
+  const { authState } = useContext(AuthContext);
+  const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
 
+  useEffect(() => {
+    if (!authState.status) {
+      navigate("/login");
+    } else {
+    axios
+      .get(`http://localhost:3001/posts`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        setPosts(response.data.listOfPosts);
+        setLikedPosts(
+          response.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
+        );
+      });
+    }
+  }, []);
+  console.log(likedPosts);
   return (
     <div className="home">
-      {posts.map((post, index) => (
-        <Post post={post} key={index} />
-      ))}
+      {posts.map((post, key) => {
+        return <Post post={post} key={key} likedPosts={likedPosts} />;
+      })}
     </div>
   );
 };

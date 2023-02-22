@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
 import { shortDate } from "../Components/utils";
+import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 
 const PostDetails = () => {
+  let navigate = useNavigate();
   const { id } = useParams();
   const [postObject, setPostObject] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState();
+  const { authState } = useContext(AuthContext);
+  
 
   useEffect(() => {
     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
@@ -18,6 +22,14 @@ const PostDetails = () => {
       setComments(response.data);
     });
   }, []);
+
+  const deletePost = (id) => {
+    axios.delete(`http://localhost:3001/posts/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}, }).then(() => {
+     console.log("success")
+    })
+    navigate("/")
+    window.location.reload();
+  }
 
   const addComment = () => {
     axios
@@ -47,12 +59,14 @@ const PostDetails = () => {
   console.log(date);
   return (
     <div className="details">
-      <div className="settings">
-        <Link to={`/details/${id}/edit`}>
-          <FaPen className="icon" />
-        </Link>
-        <FaTrash className="icon" />
-      </div>
+      {authState.username === postObject.username && (
+         <div className="settings">
+         <Link to={`/details/${id}/edit`}>
+           <FaPen className="icon" />
+         </Link>
+         <FaTrash className="icon" onClick={()=>deletePost(id)} />
+       </div>
+      )}
       <p>posted by @{postObject.username}</p>
       <h2>{postObject.title}</h2>
       <span>posted on {postObject.createdAt}</span>
@@ -60,7 +74,7 @@ const PostDetails = () => {
       <div className="likes">
         <FaRegStar className="icon" />
       </div>
-      <h3> comments:</h3>
+      <h3>{comments.length} comments:</h3>
       <ul>
         {comments.map((comment, index) => {
           return (

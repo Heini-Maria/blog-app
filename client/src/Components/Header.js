@@ -3,8 +3,17 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 
 const Header = ({ toggleTheme, theme }) => {
-  const { authState } = useContext(AuthContext);
-  console.log(authState);
+  const { authState, setAuthState } = useContext(AuthContext);
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      username: "",
+      id: 0,
+      status: false,
+  });
+  };
+
   return (
     <header className="header">
       <NavLink className="logo" to="/">
@@ -23,9 +32,13 @@ const Header = ({ toggleTheme, theme }) => {
             <span className="slider"></span>
           </label>
         </div>
-        {!authState && (
+        {!authState.status ? (
           <NavLink className="button" to="/login">
             Login
+          </NavLink>
+        ) : (
+          <NavLink onClick={logout} className="button" to="/">
+            Logout
           </NavLink>
         )}
         <NavLink className="button" to="post">

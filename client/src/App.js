@@ -26,8 +26,13 @@ const queryClient = new QueryClient({
 
 const App = () => {
   const [theme, setTheme] = useState("light");
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    status: false,
+  });
 
+  console.log(authState);
   useEffect(() => {
     axios
       .get("http://localhost:3001/auth/auth", {
@@ -37,9 +42,13 @@ const App = () => {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false });
         } else {
-          setAuthState(true);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
         }
       });
   }, []);
@@ -47,7 +56,7 @@ const App = () => {
   const toggleTheme = () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
   };
-  
+
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
       <Router>

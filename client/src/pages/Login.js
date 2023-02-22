@@ -9,15 +9,18 @@ const Login = () => {
   const { setAuthState } = useContext(AuthContext);
   let navigate = useNavigate();
 
-  console.log(AuthContext);
   const login = () => {
     const data = { username: username, password: password };
     axios.post("http://localhost:3001/auth/login", data).then((res) => {
       if (res.data.error) {
         alert(res.data.error);
       } else {
-        localStorage.setItem("accessToken", res.data);
-        setAuthState(true);
+        localStorage.setItem("accessToken", res.data.token);
+        setAuthState({
+          username: res.data.username,
+          id: res.data.id,
+          status: true,
+        });
         navigate("/");
       }
     });
