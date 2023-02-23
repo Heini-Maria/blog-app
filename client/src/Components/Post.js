@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaStar, FaRegStar } from "react-icons/fa";
-import { prettyDate } from "./utils";
+import { prettyDate, accessToken } from "../helpers/utils";
 import axios from "axios";
 
 const Post = ({ post, likedPosts }) => {
@@ -15,7 +15,7 @@ const Post = ({ post, likedPosts }) => {
         { PostId: postId },
         {
           headers: {
-            accessToken: localStorage.getItem("accessToken"),
+            accessToken: accessToken(),
           },
         }
       )

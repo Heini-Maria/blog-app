@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import FormFields from "../Components/FormFields";
+import { accessToken } from "../helpers/utils";
 import axios from "axios";
 
 const EditPost = () => {
@@ -9,7 +10,7 @@ const EditPost = () => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
-    if (!localStorage.getItem("accessToken")) {
+    if (!accessToken()) {
       navigate("/login");
     } else {
       axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
@@ -21,7 +22,7 @@ const EditPost = () => {
   const editPost = (obj, id) => {
     axios
       .put(`http://localhost:3001/posts/${id}`, obj, {
-        headers: { accessToken: localStorage.getItem("accessToken") },
+        headers: { accessToken: accessToken() },
       })
       .then(() => {
         navigate(`/details/${id}`);
@@ -31,7 +32,10 @@ const EditPost = () => {
   return (
     <div className="new-post-view">
       <h2>Edit Post</h2>
-      <form action="/" method="POST" onSubmit={(e) => {
+      <form
+        action="/"
+        method="POST"
+        onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target);
           const obj = {
@@ -39,7 +43,8 @@ const EditPost = () => {
             postText: formData.get("postText") ?? "",
           };
           editPost(obj, id);
-        }}>
+        }}
+      >
         <FormFields post={post} />
       </form>
     </div>

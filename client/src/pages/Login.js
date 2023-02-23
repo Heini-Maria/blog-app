@@ -1,12 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../helpers/AuthContext";
 
-const Login = () => {
+const Login = ({setAuthState}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuthState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   const login = () => {
@@ -50,7 +48,9 @@ const Login = () => {
           Login
         </button>
       </div>
-      <Link to="/registration">Register</Link>
+      <p>
+        Don't have a Nerdy account yet? <Link to="/registration">Register here.</Link>
+      </p>
     </div>
   );
 };

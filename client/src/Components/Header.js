@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ toggleTheme, theme }) => {
-  const { authState, setAuthState } = useContext(AuthContext);
+const Header = ({ toggleTheme, theme, authState, setAuthState }) => {
+  let navigate = useNavigate();
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -12,6 +12,8 @@ const Header = ({ toggleTheme, theme }) => {
       id: 0,
       status: false,
     });
+    navigate("/login");
+    window.location.reload();
   };
 
   return (

@@ -1,42 +1,43 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
-import { shortDate } from "../Components/utils";
-import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
+import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
+import { accessToken } from "../helpers/utils";
 
-const PostDetails = () => {
+const PostDetails = ({ authState }) => {
   let navigate = useNavigate();
   const { id } = useParams();
   const [postObject, setPostObject] = useState({});
-  const [likes, setLikes] = useState([])
+  const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState();
-  const { authState } = useContext(AuthContext);
-  
 
   useEffect(() => {
-    if (!localStorage.getItem("accessToken")) {
+    if (!accessToken()) {
       navigate("/login");
     } else {
-    axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-      setPostObject(response.data);
-      setLikes(response.data.Likes)
-    });
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
-      setComments(response.data);
-    });
-  }
+      axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
+        setPostObject(response.data);
+        setLikes(response.data.Likes);
+      });
+      axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+        setComments(response.data);
+      });
+    }
   }, []);
-  
-  console.log(likes.length);
 
+  console.log(postObject);
   const deletePost = (id) => {
-    axios.delete(`http://localhost:3001/posts/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}, }).then(() => {
-     console.log("success")
-    })
-    navigate("/")
-  }
+    axios
+      .delete(`http://localhost:3001/posts/${id}`, {
+        headers: { accessToken: accessToken() },
+      })
+      .then(() => {
+        console.log("success");
+      });
+    navigate("/");
+    window.location.reload();
+  };
 
   const addComment = () => {
     console.log(id);
@@ -49,46 +50,48 @@ const PostDetails = () => {
         },
         {
           headers: {
-            accessToken: localStorage.getItem("accessToken"),
+            accessToken: accessToken(),
           },
         }
       )
       .then((response) => {
-        if(response.data.error) {
+        if (response.data.error) {
           alert(response.data.error);
         } else {
-        const commentToAdd = { commentBody: newComment, username: response.data.username};
-        setComments([...comments, commentToAdd]);
-        setNewComment("");
+          const commentToAdd = {
+            commentBody: newComment,
+            username: response.data.username,
+          };
+          setComments([...comments, commentToAdd]);
+          setNewComment("");
         }
       });
   };
-  const date = postObject.createdAt;
-  console.log(date);
+
   return (
     <div className="details">
       {authState.username === postObject.username && (
-         <div className="settings">
-         <Link to={`/details/${id}/edit`}>
-           <FaPen className="icon" />
-         </Link>
-         <FaTrash className="icon" onClick={()=>deletePost(id)} />
-       </div>
+        <div className="settings">
+          <Link to={`/details/${id}/edit`}>
+            <FaPen className="icon" />
+          </Link>
+          <FaTrash className="icon" onClick={() => deletePost(id)} />
+        </div>
       )}
       <p>posted by @{postObject.username}</p>
       <h2>{postObject.title}</h2>
-      <span>posted on {postObject.createdAt}</span>
       <p>{postObject.postText}</p>
       <div className="likes">
-        <FaRegStar className="icon" />
-       {likes.length}
+        <FaRegStar />
+        {likes.length}
       </div>
       <h3>{comments.length} comments:</h3>
       <ul>
         {comments.map((comment, index) => {
           return (
             <li className="comment" key={index}>
-             <strong>@{comment.username}: </strong>{comment.commentBody}
+              <strong>@{comment.username}: </strong>
+              {comment.commentBody}
             </li>
           );
         })}
