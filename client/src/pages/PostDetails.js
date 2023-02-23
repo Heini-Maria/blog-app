@@ -9,6 +9,7 @@ const PostDetails = () => {
   let navigate = useNavigate();
   const { id } = useParams();
   const [postObject, setPostObject] = useState({});
+  const [likes, setLikes] = useState([])
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState();
   const { authState } = useContext(AuthContext);
@@ -20,12 +21,15 @@ const PostDetails = () => {
     } else {
     axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
       setPostObject(response.data);
+      setLikes(response.data.Likes)
     });
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
   }
   }, []);
+  
+  console.log(likes.length);
 
   const deletePost = (id) => {
     axios.delete(`http://localhost:3001/posts/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}, }).then(() => {
@@ -35,6 +39,7 @@ const PostDetails = () => {
   }
 
   const addComment = () => {
+    console.log(id);
     axios
       .post(
         `http://localhost:3001/comments`,
@@ -76,6 +81,7 @@ const PostDetails = () => {
       <p>{postObject.postText}</p>
       <div className="likes">
         <FaRegStar className="icon" />
+       {likes.length}
       </div>
       <h3>{comments.length} comments:</h3>
       <ul>

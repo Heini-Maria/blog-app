@@ -1,22 +1,45 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import fetchPost from "../Components/fetchPost";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import FormFields from "../Components/FormFields";
+import axios from "axios";
 
 const EditPost = () => {
+  let navigate = useNavigate();
   const { id } = useParams();
-  const results = useQuery(["posts"], fetchPost);
-  if (results.isLoading) {
-    return <p>Loading...</p>;
-  }
-  console.log(results.data);
-  const key = id - 1;
-  const post = results.data[key];
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+    } else {
+      axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
+        setPost(response.data);
+      });
+    }
+  }, []);
+
+  const editPost = (obj, id) => {
+    axios
+      .put(`http://localhost:3001/posts/${id}`, obj, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        navigate(`/details/${id}`);
+      });
+  };
+
   return (
     <div className="new-post-view">
       <h2>Edit Post</h2>
-      <form action="/" method="POST">
+      <form action="/" method="POST" onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const obj = {
+            title: formData.get("title") ?? "",
+            postText: formData.get("postText") ?? "",
+          };
+          editPost(obj, id);
+        }}>
         <FormFields post={post} />
       </form>
     </div>

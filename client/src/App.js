@@ -65,12 +65,12 @@ const App = () => {
             <div className="background" id={theme}>
               <Header theme={theme} toggleTheme={toggleTheme} />
               <Routes>
-                <Route path="details/:id/edit" element={<EditPost />} />
-                <Route path="details/:id" element={<PostDetails />} />
-                <Route path="/post" element={<AddPost />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Home authState={authState} />} />
+                <Route exact path="details/:id/edit" element={<EditPost />} />
+                <Route exact path="details/:id" element={<PostDetails />} />
+                <Route exact path="/post" element={<AddPost />} />
+                <Route exact path="/registration" element={<Registration />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/" element={<Home authState={authState} />} />
               </Routes>
             </div>
           </ThemeContext.Provider>
