@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import FormFields from "../Components/FormFields";
+import { postSchema } from "../helpers/postValidation";
 import { accessToken } from "../helpers/utils";
 import axios from "axios";
+import FormFields from "../Components/FormFields";
 
 const EditPost = () => {
   let navigate = useNavigate();
@@ -19,32 +20,29 @@ const EditPost = () => {
     }
   }, []);
 
-  const editPost = (obj, id) => {
-    axios
-      .put(`http://localhost:3001/posts/${id}`, obj, {
-        headers: { accessToken: accessToken() },
-      })
-      .then(() => {
-        navigate(`/details/${id}`);
-      });
+  const editPost = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const obj = {
+      title: formData.get("title") ?? "",
+      post: formData.get("postText") ?? "",
+    };
+    const isValid = await postSchema.isValid(obj);
+    if (isValid) {
+      axios
+        .put(`http://localhost:3001/posts/${id}`, obj, {
+          headers: { accessToken: accessToken() },
+        })
+        .then(() => {
+          navigate(`/details/${id}`);
+        });
+    }
   };
 
   return (
     <div className="new-post-view">
       <h2>Edit Post</h2>
-      <form
-        action="/"
-        method="POST"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target);
-          const obj = {
-            title: formData.get("title") ?? "",
-            postText: formData.get("postText") ?? "",
-          };
-          editPost(obj, id);
-        }}
-      >
+      <form action="" onSubmit={editPost}>
         <FormFields post={post} />
       </form>
     </div>

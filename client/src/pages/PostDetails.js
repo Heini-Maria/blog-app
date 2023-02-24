@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
 import { accessToken } from "../helpers/utils";
+import { commentSchema } from "../helpers/commentValidation";
 
 const PostDetails = ({ authState }) => {
   let navigate = useNavigate();
@@ -16,10 +17,14 @@ const PostDetails = ({ authState }) => {
     if (!accessToken()) {
       navigate("/login");
     } else {
-      axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-        setPostObject(response.data);
-        setLikes(response.data.Likes);
-      });
+      axios
+        .get(`http://localhost:3001/posts/byId/${id}`, {
+          headers: { accessToken: accessToken() },
+        })
+        .then((response) => {
+          setPostObject(response.data);
+          setLikes(response.data.Likes);
+        });
       axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
         setComments(response.data);
       });
@@ -36,36 +41,43 @@ const PostDetails = ({ authState }) => {
         console.log("success");
       });
     navigate("/");
-    window.location.reload();
+    navigate(0);
   };
 
-  const addComment = () => {
-    console.log(id);
-    axios
-      .post(
-        `http://localhost:3001/comments`,
-        {
-          commentBody: newComment,
-          PostId: id,
-        },
-        {
-          headers: {
-            accessToken: accessToken(),
+  const addComment = async (e) => {
+    e.preventDefault();
+
+    const obj = {
+      comment: newComment,
+    };
+    const isValid = await commentSchema.isValid(obj);
+    if (isValid) {
+      axios
+        .post(
+          `http://localhost:3001/comments`,
+          {
+            comment: newComment,
+            PostId: id,
           },
-        }
-      )
-      .then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          const commentToAdd = {
-            commentBody: newComment,
-            username: response.data.username,
-          };
-          setComments([...comments, commentToAdd]);
-          setNewComment("");
-        }
-      });
+          {
+            headers: {
+              accessToken: accessToken(),
+            },
+          }
+        )
+        .then((response) => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            const commentToAdd = {
+              comment: newComment,
+              username: response.data.username,
+            };
+            setComments([...comments, commentToAdd]);
+            setNewComment("");
+          }
+        });
+    }
   };
 
   return (
@@ -80,7 +92,7 @@ const PostDetails = ({ authState }) => {
       )}
       <p>posted by @{postObject.username}</p>
       <h2>{postObject.title}</h2>
-      <p>{postObject.postText}</p>
+      <p>{postObject.post}</p>
       <div className="likes">
         <FaRegStar />
         {likes.length}
@@ -91,7 +103,7 @@ const PostDetails = ({ authState }) => {
           return (
             <li className="comment" key={index}>
               <strong>@{comment.username}: </strong>
-              {comment.commentBody}
+              {comment.comment}
             </li>
           );
         })}
@@ -99,17 +111,18 @@ const PostDetails = ({ authState }) => {
       <div className="leave-comment">
         <input
           type="text"
-          maxLength={30}
+          maxLength={45}
+          minLength={3}
           onChange={(e) => {
             setNewComment(e.target.value);
           }}
-          id="commentBody"
-          name="commentBody"
+          id="comment"
+          name="comment"
           value={newComment}
           placeholder="add comment.."
           required
         />
-        <FaRegComment onClick={addComment} className="icon" />
+        <FaRegComment onClick={addComment} type="submit" className="icon" />
       </div>
       <Link to="/" className="button cancel">
         Back

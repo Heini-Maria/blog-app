@@ -1,17 +1,24 @@
 import React, { useEffect } from "react";
-import FormFields from "../Components/FormFields";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useNavigate, Link } from "react-router-dom";
 import { accessToken } from "../helpers/utils";
+import { postSchema } from "../helpers/postValidation";
 
 const AddPost = () => {
   let navigate = useNavigate();
+  const initialValues = {
+    title: "",
+    post: "",
+  };
+
   useEffect(() => {
     if (!accessToken()) {
       navigate("/login");
     }
   }, []);
-  const onSubmit = (obj) => {
+
+  const addPost = (obj) => {
     axios
       .post(`http://localhost:3001/posts`, obj, {
         headers: { accessToken: accessToken() },
@@ -24,21 +31,35 @@ const AddPost = () => {
   return (
     <div className="new-post-view">
       <h2>New Fact</h2>
-      <form
-        action="/"
-        method="POST"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target);
-          const obj = {
-            title: formData.get("title") ?? "",
-            postText: formData.get("postText") ?? "",
-          };
-          onSubmit(obj);
-        }}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={postSchema}
+        onSubmit={addPost}
       >
-        <FormFields post={""} />
-      </form>
+        <Form className="form">
+          <label htmlFor="title">*Title: </label>
+          <ErrorMessage name="title" component="span" />
+          <Field autoComplete="off" id="title" name="title" />
+          <label htmlFor="post">*Text: </label>
+          <ErrorMessage name="post" component="span" />
+          <Field
+            autoComplete="off"
+            id="post"
+            name="post"
+            type="text"
+            as="textarea"
+          />
+          <p>* required</p>
+          <div>
+            <Link className="button cancel" to="/">
+              Cancel
+            </Link>
+            <button className="button" type="submit">
+              Save
+            </button>
+          </div>
+        </Form>
+      </Formik>
     </div>
   );
 };

@@ -331,6 +331,9 @@ input,
 .details > .button {
   margin-top: 2rem;
 }
+.details > form > input {
+  min-width: 100%;
+}
 .comment {
   -webkit-animation: fadeIn 0.8s ease-in 0.8s both;
   -moz-animation: fadeIn 0.8s ease-in 0.8s both;

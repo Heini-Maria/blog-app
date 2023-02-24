@@ -43,7 +43,7 @@ const Post = ({ post, likedPosts }) => {
       <p>@{post.username}</p>
       <h3>{post.title}</h3>
       <span>{prettyDate(post.createdAt)}</span>
-      <p>{post.postText}</p>
+      <p>{post.post}</p>
       <div className="stats">
         {thisLiked.includes(post.id) ? (
           <p>

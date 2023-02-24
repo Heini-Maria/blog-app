@@ -9,6 +9,8 @@ const FormFields = ({ post }) => {
         type="text"
         name="title"
         id="title"
+        minLength={3}
+        maxLength={60}
         defaultValue={post.title}
         required
       />
@@ -17,8 +19,10 @@ const FormFields = ({ post }) => {
         name="postText"
         id="postText"
         cols="10"
-        rows="8"
-        defaultValue={post.postText}
+        rows="3"
+        minLength={10}
+        maxLength={300}
+        defaultValue={post.post}
         required
       ></textarea>
       <p>* required</p>
@@ -26,7 +30,9 @@ const FormFields = ({ post }) => {
         <Link className="button cancel" to="/">
           Cancel
         </Link>
-        <button type="submit">Save</button>
+        <button className="button" type="submit">
+          Save
+        </button>
       </div>
     </div>
   );
