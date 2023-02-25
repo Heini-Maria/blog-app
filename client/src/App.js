@@ -16,6 +16,8 @@ export const AuthContext = createContext("");
 
 const App = () => {
   const [theme, setTheme] = useState("light");
+  const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -40,12 +42,25 @@ const App = () => {
           });
         }
       });
+    axios
+      .get(`http://localhost:3001/posts`, {
+        headers: { accessToken: accessToken() },
+      })
+      .then((response) => {
+        setPosts(response.data.listOfPosts);
+        setLikedPosts(
+          response.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
+        );
+      });
   }, []);
 
   const toggleTheme = () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
   };
 
+  console.log(posts);
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -66,7 +81,13 @@ const App = () => {
               <Route
                 exact
                 path="details/:id"
-                element={<PostDetails authState={authState} />}
+                element={
+                  <PostDetails
+                    authState={authState}
+                    posts={posts}
+                    likedPosts={likedPosts}
+                  />
+                }
               />
               <Route
                 exact
@@ -81,7 +102,17 @@ const App = () => {
                   <Login authState={authState} setAuthState={setAuthState} />
                 }
               />
-              <Route exact path="/" element={<Home authState={authState} />} />
+              <Route
+                exact
+                path="/"
+                element={
+                  <Home
+                    authState={authState}
+                    posts={posts}
+                    likedPosts={likedPosts}
+                  />
+                }
+              />
             </Routes>
           </div>
         </Router>

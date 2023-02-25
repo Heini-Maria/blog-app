@@ -20,6 +20,7 @@ const Login = ({setAuthState}) => {
           status: true,
         });
         navigate("/");
+        navigate(0);
       }
     });
   };

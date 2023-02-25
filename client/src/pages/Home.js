@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Post from "../Components/Post";
 import { accessToken } from "../helpers/utils";
 
-const Home = ({ authState }) => {
+const Home = ({ authState, posts, likedPosts }) => {
   let navigate = useNavigate();
-  const [posts, setPosts] = useState([]);
-  const [likedPosts, setLikedPosts] = useState([]);
 
   useEffect(() => {
     if (!accessToken()) {
       navigate("/login");
-    } else {
-      axios
-        .get(`http://localhost:3001/posts`, {
-          headers: { accessToken: accessToken() },
-        })
-        .then((response) => {
-          setPosts(response.data.listOfPosts);
-          setLikedPosts(
-            response.data.likedPosts.map((like) => {
-              return like.PostId;
-            })
-          );
-        });
     }
   }, []);
   console.log(authState);

@@ -18,3 +18,9 @@ export const accessToken = () => {
   let accessToken = localStorage.getItem("accessToken");
   return accessToken;
 };
+
+export const unescape = (string) => {
+ string = string.replace(/&quot;/g, "\"");
+ string = string.replace(/#39;/g, "'");
+ return string;
+}

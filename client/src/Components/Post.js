@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaStar, FaRegStar } from "react-icons/fa";
-import { prettyDate, accessToken } from "../helpers/utils";
+import { Link, useNavigate } from "react-router-dom";
+import { FaStar, FaRegStar, FaRegComment } from "react-icons/fa";
+import { prettyDate, accessToken, unescape } from "../helpers/utils";
 import axios from "axios";
 
 const Post = ({ post, likedPosts }) => {
+  let navigate = useNavigate();
   const [thisPost, setThisPost] = useState(post);
   const [thisLiked, setThisLiked] = useState(likedPosts);
 
@@ -43,30 +44,38 @@ const Post = ({ post, likedPosts }) => {
       <p>@{post.username}</p>
       <h3>{post.title}</h3>
       <span>{prettyDate(post.createdAt)}</span>
-      <p>{post.post}</p>
+      <p>{unescape(post.post)}</p>
       <div className="stats">
-        {thisLiked.includes(post.id) ? (
+        <div className="stats-icons">
+          {thisLiked.includes(post.id) ? (
+            <p>
+              <FaStar
+                className="liked"
+                onClick={() => {
+                  likeAPost(post.id);
+                }}
+              />
+              {thisPost.Likes.length}
+            </p>
+          ) : (
+            <p>
+              <FaRegStar
+                className="unliked"
+                onClick={() => {
+                  likeAPost(post.id);
+                }}
+              />
+              {thisPost.Likes.length}
+            </p>
+          )}
           <p>
-            <FaStar
-              className="liked"
-              onClick={() => {
-                likeAPost(post.id);
-              }}
+            <FaRegComment
+              onClick={() =>  {navigate(`details/${post.id}`)}}
+              className="post-comments"
             />
-            {thisPost.Likes.length}
+            {thisPost.Comments.length}
           </p>
-        ) : (
-          <p>
-            <FaRegStar
-              className="unliked"
-              onClick={() => {
-                likeAPost(post.id);
-              }}
-            />
-            {thisPost.Likes.length}
-          </p>
-        )}
-
+        </div>
         <Link to={`/details/${post.id}`} className="button">
           View
         </Link>

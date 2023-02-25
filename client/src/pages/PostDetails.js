@@ -2,36 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
-import { accessToken } from "../helpers/utils";
+import { accessToken, unescape, prettyDate } from "../helpers/utils";
 import { commentSchema } from "../helpers/commentValidation";
 
-const PostDetails = ({ authState }) => {
+const PostDetails = ({ authState, posts }) => {
   let navigate = useNavigate();
   const { id } = useParams();
-  const [postObject, setPostObject] = useState({});
-  const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState();
 
+  const post = posts.find((post) => {
+    return post.id == id;
+  });
+  console.log(post.Likes.length);
   useEffect(() => {
     if (!accessToken()) {
       navigate("/login");
     } else {
-      axios
-        .get(`http://localhost:3001/posts/byId/${id}`, {
-          headers: { accessToken: accessToken() },
-        })
-        .then((response) => {
-          setPostObject(response.data);
-          setLikes(response.data.Likes);
-        });
       axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
         setComments(response.data);
       });
     }
   }, []);
 
-  console.log(postObject);
   const deletePost = (id) => {
     axios
       .delete(`http://localhost:3001/posts/${id}`, {
@@ -82,7 +75,7 @@ const PostDetails = ({ authState }) => {
 
   return (
     <div className="details">
-      {authState.username === postObject.username && (
+      {authState.username === post.username && (
         <div className="settings">
           <Link to={`/details/${id}/edit`}>
             <FaPen className="icon" />
@@ -90,12 +83,13 @@ const PostDetails = ({ authState }) => {
           <FaTrash className="icon" onClick={() => deletePost(id)} />
         </div>
       )}
-      <p>posted by @{postObject.username}</p>
-      <h2>{postObject.title}</h2>
-      <p>{postObject.post}</p>
+      <p>posted by @{post.username}</p>
+      <h2>{post.title}</h2>
+      <span>{prettyDate(post.createdAt)}</span>
+      <p>{unescape(post.post)}</p>
       <div className="likes">
         <FaRegStar />
-        {likes.length}
+        {post.Likes.length}
       </div>
       <h3>{comments.length} comments:</h3>
       <ul>
@@ -103,7 +97,7 @@ const PostDetails = ({ authState }) => {
           return (
             <li className="comment" key={index}>
               <strong>@{comment.username}: </strong>
-              {comment.comment}
+              {unescape(comment.comment)}
             </li>
           );
         })}

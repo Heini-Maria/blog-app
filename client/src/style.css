@@ -223,26 +223,33 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
 }
-.stats > p {
+.stats-icons {
+  display: flex;
+}
+.stats-icons > p {
   font-size: 1.4rem;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   margin-right: 1rem;
 }
-.stats > p > * {
+.stats-icons > p > * {
   margin-right: 0.5rem;
   font-size: 1.5rem;
 }
-.stats > p > .unliked:hover {
+.stats-icons > p > .unliked:hover,
+.post-comments:hover {
   color: var(--accent-color);
   transform: translateY(-2px);
 }
-.stats > p > .liked:hover {
+.stats-icons > p > .liked:hover {
   color: var(--color-white);
   transform: translateY(-2px);
 }
 .liked {
   color: var(--accent-color);
+}
+.post-comments {
+  width: 1.35rem;
 }
 .post > button {
   width: 15%;
