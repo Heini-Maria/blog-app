@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = ({setAuthState}) => {
+const Login = ({ setAuthState }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
@@ -50,7 +50,8 @@ const Login = ({setAuthState}) => {
         </button>
       </div>
       <p>
-        Don't have a Nerdy account yet? <Link to="/registration">Register here.</Link>
+        Don`t have a Nerdy account yet?{" "}
+        <Link to="/registration">Register here.</Link>
       </p>
     </div>
   );

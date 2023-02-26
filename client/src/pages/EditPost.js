@@ -14,9 +14,13 @@ const EditPost = () => {
     if (!accessToken()) {
       navigate("/login");
     } else {
-      axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
-        setPost(response.data);
-      });
+      axios
+        .get(`http://localhost:3001/posts/byId/${id}`, {
+          headers: { accessToken: accessToken() },
+        })
+        .then((response) => {
+          setPost(response.data);
+        });
     }
   }, []);
 
@@ -34,11 +38,12 @@ const EditPost = () => {
           headers: { accessToken: accessToken() },
         })
         .then(() => {
-          navigate(`/details/${id}`);
+          navigate(`/`);
+          navigate(0);
         });
     }
   };
-
+  console.log(post);
   return (
     <div className="new-post-view">
       <h2>Edit Post</h2>

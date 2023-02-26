@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import axios from "axios";
 import { userSchema } from "../helpers/userValidation";
 
@@ -13,8 +12,10 @@ const Registration = () => {
   };
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/auth", data).then(() => {
-      console.log(data)
+    axios.post("http://localhost:3001/auth", data).then((response) => {
+      if (response.data.error) {
+        alert(response.data.error);
+      }
       navigate("/login");
     });
   };

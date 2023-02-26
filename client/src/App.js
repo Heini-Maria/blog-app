@@ -10,6 +10,7 @@ import EditPost from "./pages/EditPost";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import { accessToken } from "./helpers/utils";
+import ErrorBoundary from "./helpers/ErrorBoundary";
 
 export const ThemeContext = createContext(null);
 export const AuthContext = createContext("");
@@ -47,6 +48,13 @@ const App = () => {
         headers: { accessToken: accessToken() },
       })
       .then((response) => {
+        if (response.isLoadin) {
+          return (
+            <div className="loading-pane">
+              <h2 className="loader">Loding</h2>
+            </div>
+          );
+        }
         setPosts(response.data.listOfPosts);
         setLikedPosts(
           response.data.likedPosts.map((like) => {
@@ -121,4 +129,10 @@ const App = () => {
   );
 };
 
-export default App;
+export default function AppErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+}
