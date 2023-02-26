@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import "./style.css";
 import Header from "./Components/Header";
 import Home from "./pages/Home";
@@ -9,6 +9,7 @@ import PostDetails from "./pages/PostDetails";
 import EditPost from "./pages/EditPost";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
+import ErrorPage from "./pages/ErrorPage";
 import { accessToken } from "./helpers/utils";
 import ErrorBoundary from "./helpers/ErrorBoundary";
 
@@ -43,17 +44,14 @@ const App = () => {
           });
         }
       });
-    axios
+   axios
       .get(`http://localhost:3001/posts`, {
         headers: { accessToken: accessToken() },
       })
       .then((response) => {
-        if (response.isLoadin) {
-          return (
-            <div className="loading-pane">
-              <h2 className="loader">Loding</h2>
-            </div>
-          );
+        console.log(response);
+        if(response.status !== 200) {
+          alert("Something went wrong. Please try again!")
         }
         setPosts(response.data.listOfPosts);
         setLikedPosts(
@@ -61,14 +59,13 @@ const App = () => {
             return like.PostId;
           })
         );
-      });
+      }); 
   }, []);
 
   const toggleTheme = () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
   };
 
-  console.log(posts);
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -110,6 +107,7 @@ const App = () => {
                   <Login authState={authState} setAuthState={setAuthState} />
                 }
               />
+              <Route exact path="/error" element={<ErrorPage />} />
               <Route
                 exact
                 path="/"

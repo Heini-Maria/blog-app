@@ -23,8 +23,12 @@ const AddPost = () => {
       .post(`http://localhost:3001/posts`, obj, {
         headers: { accessToken: accessToken() },
       })
-      .then(() => {
-        navigate("/");
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          navigate("/");
+        }
       });
   };
 

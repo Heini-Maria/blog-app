@@ -14,14 +14,17 @@ const PostDetails = ({ authState, posts }) => {
   const post = posts.find((post) => {
     return post.id == id;
   });
-  console.log(post.Likes.length);
   useEffect(() => {
     if (!accessToken()) {
       navigate("/login");
     } else {
-      axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
-        setComments(response.data);
-      });
+      try {
+        axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+          setComments(response.data);
+        });
+      } catch (error) {
+        navigate("/error");
+      }
     }
   }, []);
 
@@ -31,10 +34,9 @@ const PostDetails = ({ authState, posts }) => {
         headers: { accessToken: accessToken() },
       })
       .then(() => {
-        console.log("success");
+        navigate("/");
+        navigate(0);
       });
-    navigate("/");
-    navigate(0);
   };
 
   const addComment = async (e) => {

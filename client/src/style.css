@@ -347,10 +347,11 @@ input,
   -o-animation: fadeIn 0.8s ease-in 0.8s both;
   animation: fadeIn 0.8s ease-in 0.8s both;
 }
-/*  ------------- register & login -------------- */
+/*  ------------- register & login & error -------------- */
 
 .register,
-.login {
+.login,
+.error {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -363,6 +364,22 @@ input,
 .login button {
   width: 15%;
   margin-top: 2rem;
+}
+.error {
+  padding-top: 10rem;
+}
+.error > div {
+  display: flex;
+  height: 20%;
+  align-items: center;
+}
+.error > div > * {
+  color: var(--accent-color);
+  margin-right: 0.5rem;
+  font-size: 2rem;
+}
+.error .icon-error {
+  width: 1.5rem;
 }
 @-webkit-keyframes fadeIn {
   0% {

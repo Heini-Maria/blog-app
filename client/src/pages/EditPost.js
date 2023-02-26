@@ -37,13 +37,16 @@ const EditPost = () => {
         .put(`http://localhost:3001/posts/${id}`, obj, {
           headers: { accessToken: accessToken() },
         })
-        .then(() => {
-          navigate(`/`);
-          navigate(0);
+        .then((response) => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            navigate(`/`);
+            navigate(0);
+          }
         });
     }
   };
-  console.log(post);
   return (
     <div className="new-post-view">
       <h2>Edit Post</h2>
