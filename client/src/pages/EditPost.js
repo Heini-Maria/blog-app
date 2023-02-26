@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { postSchema } from "../helpers/postValidation";
 import { accessToken } from "../helpers/utils";
 import axios from "axios";
@@ -32,17 +32,20 @@ const EditPost = () => {
       post: formData.get("postText") ?? "",
     };
     const isValid = await postSchema.isValid(obj);
-    if (isValid) {
+    if (!isValid) {
+      alert(
+        "post can only contain letters, numbers and most common characters"
+      );
+    } else {
       axios
         .put(`http://localhost:3001/posts/${id}`, obj, {
           headers: { accessToken: accessToken() },
         })
         .then((response) => {
           if (response.data.error) {
-            alert(response.data.error);
+            navigate("/error");
           } else {
-            navigate(`/`);
-            navigate(0);
+            navigate(`/details/${id}`);
           }
         });
     }

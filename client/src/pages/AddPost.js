@@ -25,7 +25,7 @@ const AddPost = () => {
       })
       .then((response) => {
         if (response.data.error) {
-          alert(response.data.error);
+          navigate("/error");
         } else {
           navigate("/");
         }

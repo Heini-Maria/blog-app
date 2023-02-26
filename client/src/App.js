@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import "./style.css";
 import Header from "./Components/Header";
 import Home from "./pages/Home";
@@ -26,6 +26,23 @@ const App = () => {
     status: false,
   });
 
+  const getPosts = () => {
+    axios
+      .get(`http://localhost:3001/posts`, {
+        headers: { accessToken: accessToken() },
+      })
+      .then((response) => {
+        if (response.status !== 200) {
+          alert("Something went wrong. Please try again!");
+        }
+        setPosts(response.data.listOfPosts);
+        setLikedPosts(
+          response.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
+        );
+      });
+  };
   useEffect(() => {
     axios
       .get("http://localhost:3001/auth/auth", {
@@ -44,22 +61,14 @@ const App = () => {
           });
         }
       });
-   axios
-      .get(`http://localhost:3001/posts`, {
-        headers: { accessToken: accessToken() },
-      })
-      .then((response) => {
-        console.log(response);
-        if(response.status !== 200) {
-          alert("Something went wrong. Please try again!")
-        }
-        setPosts(response.data.listOfPosts);
-        setLikedPosts(
-          response.data.likedPosts.map((like) => {
-            return like.PostId;
-          })
-        );
-      }); 
+  }, []);
+
+  useEffect(() => {
+    getPosts();
+    const interval = setInterval(() => {
+      getPosts();
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const toggleTheme = () => {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Post from "../Components/Post";
 import { accessToken } from "../helpers/utils";
 
-const Home = ({ authState, posts, likedPosts }) => {
+const Home = ({ posts, likedPosts }) => {
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -11,7 +11,6 @@ const Home = ({ authState, posts, likedPosts }) => {
       navigate("/login");
     }
   }, []);
-  console.log(authState);
   return (
     <div className="home">
       {posts.map((post, key) => {

@@ -35,7 +35,6 @@ const PostDetails = ({ authState, posts }) => {
       })
       .then(() => {
         navigate("/");
-        navigate(0);
       });
   };
 
@@ -62,7 +61,7 @@ const PostDetails = ({ authState, posts }) => {
         )
         .then((response) => {
           if (response.data.error) {
-            alert(response.data.error);
+            navigate("/error");
           } else {
             const commentToAdd = {
               comment: newComment,

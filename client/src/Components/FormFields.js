@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { unescape } from "../helpers/utils";
 
 const FormFields = ({ post }) => {
   return (
