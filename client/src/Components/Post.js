@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaStar, FaRegStar, FaRegComment } from "react-icons/fa";
-import { prettyDate, accessToken, unescape } from "../helpers/utils";
+import { prettyDate, accessToken} from "../helpers/utils";
 import axios from "axios";
 
 const Post = ({ post, likedPosts }) => {
@@ -44,7 +44,7 @@ const Post = ({ post, likedPosts }) => {
       <p>@{post.username}</p>
       <h3>{post.title}</h3>
       <span>{prettyDate(post.createdAt)}</span>
-      <p>{unescape(post.post)}</p>
+      <p>{post.post}</p>
       <div className="stats">
         <div className="stats-icons">
           {thisLiked.includes(post.id) ? (

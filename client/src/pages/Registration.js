@@ -28,16 +28,20 @@ const Registration = () => {
       >
         <Form className="form">
           <label htmlFor="username">*Username: </label>
-          <ErrorMessage name="username" component="span" />
           <Field autoComplete="off" id="username" name="username" />
+          <span className="error-msg">
+            <ErrorMessage name="username" component="span" />
+          </span>
           <label htmlFor="password">*Password: </label>
-          <ErrorMessage name="password" component="span" />
           <Field
             autoComplete="off"
             id="password"
             name="password"
             type="password"
           />
+          <span className="error-msg">
+            <ErrorMessage name="password" component="span" />
+          </span>
           <p>* required</p>
           <button type="submit">Register</button>
         </Form>

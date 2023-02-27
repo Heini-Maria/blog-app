@@ -42,10 +42,11 @@ const AddPost = () => {
       >
         <Form className="form">
           <label htmlFor="title">*Title: </label>
-          <ErrorMessage name="title" component="span" />
           <Field autoComplete="off" id="title" name="title" />
+          <span className="error-msg">
+            <ErrorMessage name="title" component="span" />
+          </span>
           <label htmlFor="post">*Text: </label>
-          <ErrorMessage name="post" component="span" />
           <Field
             autoComplete="off"
             id="post"
@@ -53,6 +54,9 @@ const AddPost = () => {
             type="text"
             as="textarea"
           />
+          <span className="error-msg">
+            <ErrorMessage name="post" component="span" />
+          </span>
           <p>* required</p>
           <div>
             <Link className="button cancel" to="/">

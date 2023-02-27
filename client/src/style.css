@@ -381,6 +381,14 @@ input,
 .error .icon-error {
   width: 1.5rem;
 }
+span.error-msg,
+.error-msg {
+  font-size: 1rem;
+  color: tomato;
+  height: 1rem;
+  margin-top: 0;
+  padding: 0.5rem 0.25rem;
+}
 @-webkit-keyframes fadeIn {
   0% {
     opacity: 0;

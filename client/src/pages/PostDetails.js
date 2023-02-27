@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaRegComment, FaTrash, FaPen, FaRegStar } from "react-icons/fa";
-import { accessToken, unescape, prettyDate } from "../helpers/utils";
+import { accessToken, prettyDate } from "../helpers/utils";
 import { commentSchema } from "../helpers/commentValidation";
 
 const PostDetails = ({ authState, posts }) => {
@@ -10,6 +10,7 @@ const PostDetails = ({ authState, posts }) => {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState();
+  const [error, setError] = useState("");
 
   const post = posts.find((post) => {
     return post.id == id;
@@ -69,9 +70,11 @@ const PostDetails = ({ authState, posts }) => {
             };
             setComments([...comments, commentToAdd]);
             setNewComment("");
+            setError("");
           }
         });
     }
+    setError("post can only contain letters, numbers and - ! ? : or )");
   };
 
   return (
@@ -87,7 +90,7 @@ const PostDetails = ({ authState, posts }) => {
       <p>posted by @{post.username}</p>
       <h2>{post.title}</h2>
       <span>{prettyDate(post.createdAt)}</span>
-      <p>{unescape(post.post)}</p>
+      <p>{post.post}</p>
       <div className="likes">
         <FaRegStar />
         {post.Likes.length}
@@ -98,7 +101,7 @@ const PostDetails = ({ authState, posts }) => {
           return (
             <li className="comment" key={index}>
               <strong>@{comment.username}: </strong>
-              {unescape(comment.comment)}
+              {comment.comment}
             </li>
           );
         })}
@@ -110,6 +113,7 @@ const PostDetails = ({ authState, posts }) => {
           minLength={3}
           onChange={(e) => {
             setNewComment(e.target.value);
+            setError("");
           }}
           id="comment"
           name="comment"
@@ -119,6 +123,7 @@ const PostDetails = ({ authState, posts }) => {
         />
         <FaRegComment onClick={addComment} type="submit" className="icon" />
       </div>
+      <span className="error-msg">{error}</span>
       <Link to="/" className="button cancel">
         Back
       </Link>

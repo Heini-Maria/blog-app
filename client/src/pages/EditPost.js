@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { postSchema } from "../helpers/postValidation";
 import { accessToken } from "../helpers/utils";
 import axios from "axios";
@@ -9,6 +9,7 @@ const EditPost = () => {
   let navigate = useNavigate();
   const { id } = useParams();
   const [post, setPost] = useState({});
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!accessToken()) {
@@ -23,7 +24,6 @@ const EditPost = () => {
         });
     }
   }, []);
-
   const editPost = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -33,9 +33,7 @@ const EditPost = () => {
     };
     const isValid = await postSchema.isValid(obj);
     if (!isValid) {
-      alert(
-        "post can only contain letters, numbers and most common characters"
-      );
+      setError("post can only contain letters, numbers and - ! ? : or )");
     } else {
       axios
         .put(`http://localhost:3001/posts/${id}`, obj, {
@@ -48,13 +46,14 @@ const EditPost = () => {
             navigate(`/details/${id}`);
           }
         });
+      setError("");
     }
   };
   return (
     <div className="new-post-view">
       <h2>Edit Post</h2>
       <form action="" onSubmit={editPost}>
-        <FormFields post={post} />
+        <FormFields post={post} error={error} setError={setError}/>
       </form>
     </div>
   );

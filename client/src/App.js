@@ -90,7 +90,7 @@ const App = () => {
               <Route
                 exact
                 path="details/:id/edit"
-                element={<EditPost authState={authState} />}
+                element={<EditPost authState={authState} posts={posts} />}
               />
               <Route
                 exact

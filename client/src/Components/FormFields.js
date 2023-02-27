@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { unescape } from "../helpers/utils";
 
-const FormFields = ({ post }) => {
+const FormFields = ({ post, error, setError }) => {
   return (
     <div className="form">
       <label htmlFor="title">*Title:</label>
@@ -15,6 +14,7 @@ const FormFields = ({ post }) => {
         defaultValue={post.title}
         required
       />
+      <span className="error-msg"></span>
       <label htmlFor="postText">*Text:</label>
       <textarea
         name="postText"
@@ -24,8 +24,12 @@ const FormFields = ({ post }) => {
         minLength={10}
         maxLength={300}
         defaultValue={post.post}
+        onChange={() => {
+          setError("");
+        }}
         required
       ></textarea>
+      <span className="error-msg">{error}</span>
       <p>* required</p>
       <div>
         <Link className="button cancel" to="/">
