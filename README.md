@@ -10,7 +10,7 @@ Visit the deployed application here: https://sunny-cascaron-e5deb2.netlify.app/
 
 ## Preview
 
-![8](https://user-images.githubusercontent.com/115211431/222178501-19e0b8e4-f17e-4ed0-bc71-35e98fec29da.png)
+![8](https://user-images.githubusercontent.com/115211431/222182092-5f2a22bc-e320-4575-b12e-f83174730ee3.png)
 
 
 ## Technologies used
