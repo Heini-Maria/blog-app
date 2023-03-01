@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Posts, Likes, Comments } = require("../models");
 const { validateToken } = require("../middleware/authMiddleware");
-const { body, validationResult } = require("express-validator");
+const { check, validationResult } = require('express-validator');
 
 router.get("/", validateToken, async (req, res) => {
   const listOfPosts = await Posts.findAll({
@@ -22,8 +22,8 @@ router.post(
   "/",
   validateToken,
   [
-    body("title").isLength({ min: 3, max: 60 }).escape(),
-    body("post").isLength({ min: 10, max: 300 }).escape(),
+    check("title").isLength({ min: 3, max: 60 }).escape(),
+    check("post").isLength({ min: 10, max: 300 }).escape(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -40,8 +40,8 @@ router.put(
   "/:postId",
   validateToken,
   [
-    body("title").isLength({ min: 3, max: 60 }).escape(),
-    body("post").isLength({ min: 10, max: 300 }).escape(),
+    check("title").isLength({ min: 3, max: 60 }).escape(),
+    check("post").isLength({ min: 10, max: 300 }).escape(),
   ],
   async (req, res) => {
     const errors = validationResult(req);

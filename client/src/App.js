@@ -28,7 +28,7 @@ const App = () => {
 
   const getPosts = () => {
     axios
-      .get(`http://localhost:3001/posts`, {
+      .get(`https://blog-app-api-production-651f.up.railway.app/posts`, {
         headers: { accessToken: accessToken() },
       })
       .then((response) => {
@@ -45,7 +45,7 @@ const App = () => {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("https://blog-app-api-production-651f.up.railway.app/auth/auth", {
         headers: {
           accessToken: accessToken(),
         },
@@ -67,7 +67,7 @@ const App = () => {
     getPosts();
     const interval = setInterval(() => {
       getPosts();
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 

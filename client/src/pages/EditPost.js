@@ -16,7 +16,7 @@ const EditPost = () => {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:3001/posts/byId/${id}`, {
+        .get(`https://blog-app-api-production-651f.up.railway.app/posts/byId/${id}`, {
           headers: { accessToken: accessToken() },
         })
         .then((response) => {
@@ -33,10 +33,10 @@ const EditPost = () => {
     };
     const isValid = await postSchema.isValid(obj);
     if (!isValid) {
-      setError("post can only contain letters, numbers and - ! ? : or )");
+      setError("post can only contain letters, numbers and - ! . , ? : or )");
     } else {
       axios
-        .put(`http://localhost:3001/posts/${id}`, obj, {
+        .put(`https://blog-app-api-production-651f.up.railway.app/posts/${id}`, obj, {
           headers: { accessToken: accessToken() },
         })
         .then((response) => {

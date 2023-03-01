@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Comments } = require("../models");
 const { validateToken } = require("../middleware/authMiddleware");
-const { body, validationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator/check");
 
 router.get("/:postId", async (req, res) => {
   const postId = req.params.postId;
@@ -13,7 +13,7 @@ router.get("/:postId", async (req, res) => {
 router.post(
   "/",
   validateToken,
-  [body("comment").isLength({ min: 3, max: 45 }).escape()],
+  [check("comment").isLength({ min: 3, max: 45 }).escape()],
   async (req, res) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {

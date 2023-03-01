@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { Users } = require("../models");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middleware/authMiddleware");
-const { body, validationResult } = require("express-validator");
+const { check, validationResult } = require('express-validator');
 
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
+  const user = await Users.findOne({ where: { username: username } });
+  if(!user) {
     await bcrypt.hash(password, 10).then((hash) => {
       Users.create({
         username: username,
@@ -15,6 +17,8 @@ router.post("/", async (req, res) => {
       });
       return res.json("SUCCESS");
     });
+  }
+  return alert("username already exists")
   });
 
 router.post("/login", async (req, res) => {
