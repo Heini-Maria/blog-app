@@ -18,7 +18,7 @@ const Header = () => {
         status: false,
       })
     );
-    navigate("/");
+    navigate(0);
   };
 
   const toggleTheme = () => {
