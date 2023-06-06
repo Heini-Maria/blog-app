@@ -9,7 +9,6 @@ router.get("/", validateToken, async (res) => {
     include: [Likes, Comments],
     order: [["updatedAt", "DESC"]],
   });
-  
   return res.json({ listOfPosts: listOfPosts });
 });
 router.get("/byId/:id", validateToken, async (req, res) => {
