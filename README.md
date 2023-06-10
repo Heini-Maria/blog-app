@@ -16,6 +16,7 @@ Visit the deployed application here: https://sunny-cascaron-e5deb2.netlify.app/
 ## Technologies used
 
   * React
+  * Redux
   * Webpack
   * Express
   * mySQL
