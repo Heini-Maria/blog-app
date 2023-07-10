@@ -1,9 +1,9 @@
 # Nerdy Facts  = Micro blogging platform
 
 Personal full stack project to practise rest APIs and to understand the relationship between back- and front-end. 
-The react application is created from scratch, using webpack.
+The React application is created from scratch, using Webpack.
 
-Nerdy Facts is a microblogging platform that allows logged-in users to create new posts, and delete and edit them. 
+Nerdy Facts is a microblogging platform that allows logged-in users to create new posts and delete and edit them. 
 Users can also like and comment on posts created by other users.
 
 Visit the deployed application here: https://sunny-cascaron-e5deb2.netlify.app/
@@ -28,15 +28,9 @@ Visit the deployed application here: https://sunny-cascaron-e5deb2.netlify.app/
  * Logged-in users can add, like and comment on posts
  * User can edit and delete the post that she/he created
 
-### Limitations
-
-  * For now, the whole page refreshes after editing or adding a post
-
 ## Future work
 
-  * Find another solution to catch the changes on posts after deleting or adding
   * Create a side section showing the most popular posts
-  * Refactor API calls to another file
   
 ## Personal experience 
 
